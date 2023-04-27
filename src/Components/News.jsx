@@ -10,6 +10,7 @@ export default class News extends Component {
       loading:true,
       page:1,
       
+      
     }
     
   }
@@ -18,10 +19,8 @@ export default class News extends Component {
     let url='https://newsapi.org/v2/top-headlines?country=in&apiKey=829ea012824442d7856c700b0116d551&page=1&pageSize=20';
     let data=await fetch(url);
     let parsedData=await data.json()
-    this.setState({articles: parsedData.articles})
-    let results=parsedData.totalResults
-    let pageSize=20
-    let totalPages=(Math.round(results/pageSize))
+    this.setState({articles: parsedData.articles, totalResults: parsedData.totalResults})
+    
   }
 
   handelPrevClick= async ()=>{
@@ -39,22 +38,20 @@ export default class News extends Component {
 
   handelNextClick= async ()=>{
 
-if(this.state.page + 1 > this.totalPages){
-
-
+if((this.state.page + 1 > Math.round(this.state.totalResults/20)))
+{
 
 }
 else
-{
-    let url=`https://newsapi.org/v2/top-headlines?country=in&apiKey=829ea012824442d7856c700b0116d551&page=${this.state.page+1}&pageSize=20`;
+{   let url=`https://newsapi.org/v2/top-headlines?country=in&apiKey=829ea012824442d7856c700b0116d551&page=${this.state.page+1}&pageSize=20`;
     let data=await fetch(url);
     let parsedData=await data.json()
     this.setState({
       page:this.state.page+1,
       articles: parsedData.articles
     })
-    
-  }
+    console.log(this.state.totalResults)
+}
 }
 
   render() {
