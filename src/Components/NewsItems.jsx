@@ -3,15 +3,18 @@ import React, { Component } from 'react'
 export default class NewsItems extends Component {
   render() {
 
-    let {title, description, imgUrl, newsUrl }=this.props;
+    let {title, publishedAt, author, description, imgUrl, newsUrl, source }=this.props;
+    
 
     return (
       <div className='my-3'>
-        <div className="card" style={{width: "18rem"}}>
-  <img style={{ width: "286px", height: "161px", objectFit:"cover"}} src={imgUrl} className="card-img-top" alt="..."/>
-  <div className="card-body">
+      <div className="card">
+    <img src={imgUrl} className="card-img-top" alt="..."/>
+    <div className="card-body">
+    <span className="badge text-bg-info">{source}</span>
     <h5 className="card-title">{title}...</h5>
     <p className="card-text">{description}...</p>
+    <p className="card-text"><small className="text-body-secondary">Last updated on {new Date(publishedAt).toDateString()}, {new Date(publishedAt).toLocaleTimeString()} by {author===null ? 'Unknown' : author }</small></p>
     <a href={newsUrl} target='_blank' rel="noopener noreferrer" className="btn btn-primary btn-sm">Read more..</a>
   </div>
 </div>
