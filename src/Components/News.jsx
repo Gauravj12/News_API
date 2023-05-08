@@ -32,50 +32,35 @@ export default class News extends Component {
   }
 
   async componentDidMount(){
-    let url=`https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=829ea012824442d7856c700b0116d551&page=1&pageSize=${this.props.pageSize}`;
-    this.setState({loading:true});
-    let data=await fetch(url);
-    let parsedData=await data.json()
-    this.setState({articles: parsedData.articles, 
-      totalResults: parsedData.totalResults,
-      loading:false
     
-    })
-    
+    this.updateNews();
   }
 
-  handelPrevClick= async ()=>{
+  updateNews= async ()=>{
 
-    let url=`https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=829ea012824442d7856c700b0116d551&page=${this.state.page-1}&pageSize=${this.props.pageSize}`;
+    const url=`https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=829ea012824442d7856c700b0116d551&page=${this.state.page}&pageSize=${this.props.pageSize}`;
     this.setState({loading:true});
     let data=await fetch(url);
     let parsedData=await data.json()
+
     this.setState({
-      page:this.state.page-1,
       articles: parsedData.articles,
+      totalResults: parsedData.totalResults,
       loading:false
     })
+  }
 
 
+  handelPrevClick= async ()=>{
+  this.setState({
+      page:this.state.page-1,
+    })
   }
 
   handelNextClick= async ()=>{
-
-if(!(this.state.page + 1 > Math.round(this.state.totalResults/this.props.pageSize)))
-{   
-  let url=`https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=829ea012824442d7856c700b0116d551&page=${this.state.page+1}&pageSize=${this.props.pageSize}`;
-this.setState({loading:true})
-    let data=await fetch(url);
-    let parsedData=await data.json()
-    
     this.setState({
       page:this.state.page+1,
-      articles: parsedData.articles,
-      author:parsedData.articles.author,
-      loading:false
-    })
-    
-}
+    })  
 }
 
   render() {
