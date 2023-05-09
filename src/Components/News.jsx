@@ -34,6 +34,7 @@ export default class News extends Component {
   async componentDidMount(){
     
     this.updateNews();
+    document.title='News_'+this.props.category.toUpperCase()
   }
 
   updateNews= async ()=>{
