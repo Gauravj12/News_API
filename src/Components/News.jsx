@@ -49,6 +49,9 @@ export default class News extends Component {
     this.props.setProgress(100);
   }
 
+ /* Issue: Whenever we are fetching the new News by running the fetch more Date function, then the "setPage" is taking some time to set the page value, which means taking extra time in rendering the page while scrolling. This issue occurs as the "setPage" is an asynchronous function.*/
+
+ /*Solution: To solve this issue we would add "page+", that is set page by incrementing the value, in the url. This is so because the url is being fetched before the set page.*/
 
   fetchMoreData =async () => {
     this.setState({page: this.state.page + 1})
@@ -87,7 +90,7 @@ export default class News extends Component {
 
   render() {
     return (
-      <div className='container'>
+      <div className='container' style={{marginTop:'70px'}}>
         <h2>Top Headlines</h2>
         <div className="card-header">{(this.props.category).toUpperCase()}</div>
          {this.state.loading && <Spinner/>} 
