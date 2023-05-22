@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import NewsItems from './NewsItems'
+import Navbar from './Navbar';
 import Spinner from './Spinner';
 import NoImage from './images/404_img.jpg'
 import PropTypes from 'prop-types'
 import InfiniteScroll from 'react-infinite-scroll-component';
-import Navbar from './Navbar';
+
 
 
 const News =(props)=> {
@@ -16,10 +17,6 @@ const News =(props)=> {
   const [totalResults, setTotalResults] = useState(0);
   const [search, setSearch]=useState('')
 
-    
-    document.title='News_'+props.category.toUpperCase()
-  
-
 
 const updateNews= async ()=>{
     props.setProgress(10);
@@ -29,13 +26,18 @@ const updateNews= async ()=>{
     props.setProgress(30);
     let parsedData=await data.json()
     props.setProgress(70);
-
     setArticles(parsedData.articles)
     setTotalResults(parsedData.totalResults)
     setLoading(false)
-    
     props.setProgress(100);
   }
+
+
+
+  useEffect(()=>{
+    document.title='News_'+props.category.toUpperCase()
+    updateNews();
+  },[])
 
  /* Issue: Whenever we are fetching the new News by running the fetch more Date function, then the "setPage" is taking some time to set the page value, which means taking extra time in rendering the page while scrolling. This issue occurs as the "setPage" is an asynchronous function.*/
 
@@ -53,11 +55,6 @@ const updateNews= async ()=>{
     
   };
 
-
-useEffect(()=>{
-  updateNews();
-
-})
 
 
 const getSearch=(e)=>{
@@ -84,10 +81,9 @@ const getSearch=(e)=>{
   
     return (
       <>
-      <Navbar onChange={getSearch} />
+      <Navbar onChange={getSearch}/>
       <div className='container' style={{marginTop:'70px'}}>
-        
-        <h2>Top Headlines</h2>
+         <h2>Top Headlines</h2>
         <div className="card-header">{(props.category).toUpperCase()}</div>
       
       <div className='my-3'>
