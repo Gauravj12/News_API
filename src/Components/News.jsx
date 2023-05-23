@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import NewsItems from './NewsItems'
 import Navbar from './Navbar';
 import Spinner from './Spinner';
-import NoImage from './images/404_img.jpg'
 import nullImg from './images/null.png'
 import PropTypes from 'prop-types'
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -17,12 +16,13 @@ const News =(props)=> {
   const [page, setPage] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
   const [search, setSearch]=useState('')
+  const [language, setLanguage]=useState('en')
 
-  const newApi=`https://newsdata.io/api/1/news?apikey=pub_22588fb3ea8bd66402557e392eff70558d063&country=${props.country}&category=${props.category}`/*&language=en*/
+  const newApi=`https://newsdata.io/api/1/news?apikey=pub_22588fb3ea8bd66402557e392eff70558d063&country=${props.country}&category=${props.category}&language=${language}`
 
 const updateNews= async ()=>{
     props.setProgress(10);
-    const url=`https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;
+    /*const url=`https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;*/
     setLoading(true);
     let data=await fetch(newApi);
     props.setProgress(30);
@@ -33,6 +33,7 @@ const updateNews= async ()=>{
     setTotalResults(parsedData.totalResults)
     setLoading(false)
     props.setProgress(100);
+    
   }
 
 
@@ -47,14 +48,14 @@ const updateNews= async ()=>{
  /*Solution: To solve this issue we would add "page+", that is set page by incrementing the value, in the url. This is so because the url is being fetched before the set page.*/
 
   const fetchMoreData =async () => {
-    const url=`https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page+1}&pageSize=${props.pageSize}`;
+    /*const url=`https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page+1}&pageSize=${props.pageSize}`;*/
     setPage(page+1)
     let data=await fetch(newApi);
     let parsedData=await data.json()
     //setArticles(articles.concat(parsedData.articles))
     setArticles(articles.concat(parsedData.results))
     setTotalResults(parsedData.totalResults)
-      
+    console.log(parsedData.nextPage)
     
   };
 
@@ -84,7 +85,7 @@ const getSearch=(e)=>{
   
     return (
       <>
-      <Navbar onChange={getSearch}/>
+      <Navbar onChange={getSearch} language={language}/>
       <div className='container' style={{marginTop:'70px'}}>
          <h2>Top Headlines</h2>
         <div className="card-header">{(props.category).toUpperCase()}</div>

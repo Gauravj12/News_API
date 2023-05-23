@@ -14,14 +14,20 @@ const Navbar=(props)=> {
     <div className="collapse navbar-collapse" id="navbarSupportedContent">
       <ul className="navbar-nav me-auto mb-2 mb-lg-0">
        
-        <li className="nav-item"><Link className='nav-link' to="/general">General</Link></li>
+        <li className="nav-item"><Link className='nav-link' to="/top">Top</Link></li>
           <li className="nav-item"><Link className='nav-link' to="/business">Business</Link></li>
           <li className="nav-item"><Link className='nav-link' to="/entertainment">Entertainment</Link></li>
           <li className="nav-item"><Link className='nav-link' to="/health">Health</Link></li>
+          <li className="nav-item"><Link className='nav-link' to="/politics">Politics</Link></li>
           <li className="nav-item"><Link className='nav-link' to="/science">Science</Link></li>
           <li className="nav-item"><Link className='nav-link' to="/sports">Sports</Link></li>
           <li className="nav-item"><Link className='nav-link' to="/technology">Technology</Link></li>
+          <li className="nav-item"><Link className='nav-link' to="/world">World</Link></li>
       </ul>
+      <select class="form-select mx-5" aria-label="Default select example" style={{width:'100px'}}>
+      <option selected value="en">English</option>
+      <option value="hi">Hindi</option>
+      </select>
       <form className="d-flex" role="search">
         <input className="form-control me-2" onChange={props.onChange} type="search" placeholder="Search" aria-label="Search"/>
       </form>
