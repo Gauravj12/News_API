@@ -3,6 +3,7 @@ import NewsItems from './NewsItems'
 import Navbar from './Navbar';
 import Spinner from './Spinner';
 import NoImage from './images/404_img.jpg'
+import nullImg from './images/null.png'
 import PropTypes from 'prop-types'
 import InfiniteScroll from 'react-infinite-scroll-component';
 
@@ -17,16 +18,18 @@ const News =(props)=> {
   const [totalResults, setTotalResults] = useState(0);
   const [search, setSearch]=useState('')
 
+  const newApi=`https://newsdata.io/api/1/news?apikey=pub_22588fb3ea8bd66402557e392eff70558d063&country=${props.country}&category=${props.category}`/*&language=en*/
 
 const updateNews= async ()=>{
     props.setProgress(10);
     const url=`https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;
     setLoading(true);
-    let data=await fetch(url);
+    let data=await fetch(newApi);
     props.setProgress(30);
     let parsedData=await data.json()
     props.setProgress(70);
-    setArticles(parsedData.articles)
+    setArticles(parsedData.results)
+   // setArticles(parsedData.articles)
     setTotalResults(parsedData.totalResults)
     setLoading(false)
     props.setProgress(100);
@@ -46,10 +49,10 @@ const updateNews= async ()=>{
   const fetchMoreData =async () => {
     const url=`https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page+1}&pageSize=${props.pageSize}`;
     setPage(page+1)
-    let data=await fetch(url);
+    let data=await fetch(newApi);
     let parsedData=await data.json()
-
-    setArticles(articles.concat(parsedData.articles))
+    //setArticles(articles.concat(parsedData.articles))
+    setArticles(articles.concat(parsedData.results))
     setTotalResults(parsedData.totalResults)
       
     
@@ -103,9 +106,9 @@ const getSearch=(e)=>{
           return search.toLowerCase() === '' ? element : element.title.toLowerCase().includes(search);
         })
         .map((element,index)=>{
-          return (<div className='col-md-3 mx-auto'  key={element.url}>
-            <NewsItems title={element.title.length >= 45 ? element.title.slice(0, 45) : element.title} publishedAt={element.publishedAt} author={element.author} source={element.source.name}
-            description={element.description !== null && element.title.length >= 45 ? element.description.slice(0, 60) : element.description} imgUrl={element.urlToImage === null ? NoImage:element.urlToImage} newsUrl={element.url}/>
+          return (<div className='col-md-3 mx-auto' key={element.link} /*key={element.url}*/>
+            <NewsItems title={element.title.length >= 45 ? element.title.slice(0, 45) : element.title} publishedAt={element.pubDate} /*publishedAt={element.publishedAt} author={element.author}source={element.source_id}source={element.source.name}*/
+            description={element.description !== null && element.title.length >= 45 ? element.description.slice(0, 60) : element.description} /*imgUrl={element.urlToImage === null ? NoImage:element.urlToImage} newsUrl={element.url}*/imgUrl={element.image_url === null ? nullImg:element.image_url} newsUrl={element.link}/>
             </div>)
           })
         } 

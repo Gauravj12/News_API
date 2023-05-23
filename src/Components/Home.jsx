@@ -14,7 +14,8 @@ const Home=()=> {
     <a href="https://newsapi.org/" rel="noreferrer" target='_blank' className="btn btn-primary">newsapi.org</a>
   </div>
 </div>
-</div></div>
+</div>
+</div>
   )
 }
 
