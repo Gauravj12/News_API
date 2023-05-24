@@ -18,11 +18,12 @@ const News =(props)=> {
   const [search, setSearch]=useState('')
   const [language, setLanguage]=useState('en')
 
-  const newApi=`https://newsdata.io/api/1/news?apikey=pub_22588fb3ea8bd66402557e392eff70558d063&country=${props.country}&category=${props.category}&language=${language}`
+  
 
 const updateNews= async ()=>{
     props.setProgress(10);
     /*const url=`https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;*/
+    const newApi=`https://newsdata.io/api/1/news?apikey=pub_22588fb3ea8bd66402557e392eff70558d063&country=${props.country}&category=${props.category}&language=${language}`
     setLoading(true);
     let data=await fetch(newApi);
     props.setProgress(30);
@@ -49,6 +50,7 @@ const updateNews= async ()=>{
 
   const fetchMoreData =async () => {
     /*const url=`https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page+1}&pageSize=${props.pageSize}`;*/
+    const newApi=`https://newsdata.io/api/1/news?apikey=pub_22588fb3ea8bd66402557e392eff70558d063&country=${props.country}&category=${props.category}&language=${language}`
     setPage(page+1)
     let data=await fetch(newApi);
     let parsedData=await data.json()
@@ -61,13 +63,15 @@ const updateNews= async ()=>{
 
 const searchVal=(e)=>{
   setSearch(e.target.value);
+  
 }
 
-const handleChange = (e) => {
+const handleChange = async(e) => {
   setLanguage(e.target.value);
+  updateNews()
 };
 
-console.log('language',language)
+
 
 
  /* handelPrevClick= async ()=>{

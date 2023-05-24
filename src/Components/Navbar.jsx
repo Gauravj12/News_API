@@ -27,7 +27,7 @@ const Navbar=(props)=> {
           <li className="nav-item"><Link className='nav-link' to="/world">World</Link></li>
       </ul>
       <select className="form-select mx-5" value={props.language} onChange={props.onLanguageChange} aria-label="Default select example" style={{width:'100px'}}>
-      <option selected value="en">English</option>
+      <option value="en">English</option>
       <option value="hi">Hindi</option>
       </select>
       <form className="d-flex" role="search">
