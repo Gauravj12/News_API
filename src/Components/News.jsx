@@ -10,22 +10,22 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 
 const News =(props)=> {
   
- 
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
   const [search, setSearch]=useState('')
   const [language, setLanguage]=useState('en')
+  const [newsArr, updatedNewsArr]=useState([])
 
-  
+  const apiLink=`https://newsdata.io/api/1/news?apikey=${props.apiKey}&country=${props.country}&category=${props.category}&language=${language}`
+
+
 
 const updateNews= async ()=>{
     props.setProgress(10);
-    /*const url=`https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;*/
-    const newApi=`https://newsdata.io/api/1/news?apikey=pub_22588fb3ea8bd66402557e392eff70558d063&country=${props.country}&category=${props.category}&language=${language}`
     setLoading(true);
-    let data=await fetch(newApi);
+    let data=await fetch(apiLink);
     props.setProgress(30);
     let parsedData=await data.json()
     props.setProgress(70);
@@ -34,6 +34,7 @@ const updateNews= async ()=>{
     setTotalResults(parsedData.totalResults)
     setLoading(false)
     props.setProgress(100);
+    updatedNewsArr(parsedData)
     
   }
 
@@ -49,15 +50,12 @@ const updateNews= async ()=>{
  /*Solution: To solve this issue we would add "page+", that is set page by incrementing the value, in the url. This is so because the url is being fetched before the set page.*/
 
   const fetchMoreData =async () => {
-    /*const url=`https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page+1}&pageSize=${props.pageSize}`;*/
-    const newApi=`https://newsdata.io/api/1/news?apikey=pub_22588fb3ea8bd66402557e392eff70558d063&country=${props.country}&category=${props.category}&language=${language}`
-    setPage(page+1)
-    let data=await fetch(newApi);
+    const api=`https://newsdata.io/api/1/news?apikey=${props.apiKey}&country=${props.country}&category=${props.category}&language=${language}&page=${newsArr.nextPage}`
+    let data=await fetch(api);
     let parsedData=await data.json()
-    //setArticles(articles.concat(parsedData.articles))
     setArticles(articles.concat(parsedData.results))
     setTotalResults(parsedData.totalResults)
-    console.log(parsedData.nextPage)
+    
     
   };
 
