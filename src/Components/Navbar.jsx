@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 // import PropTypes from 'prop-types'
 
 const Navbar=(props)=> {
+
+
     return (
       <div>
   <nav className="navbar fixed-top navbar-expand-lg bg-body-tertiary">
@@ -24,7 +26,7 @@ const Navbar=(props)=> {
           <li className="nav-item"><Link className='nav-link' to="/technology">Technology</Link></li>
           <li className="nav-item"><Link className='nav-link' to="/world">World</Link></li>
       </ul>
-      <select class="form-select mx-5" aria-label="Default select example" style={{width:'100px'}}>
+      <select className="form-select mx-5" value={props.language} onChange={props.onLanguageChange} aria-label="Default select example" style={{width:'100px'}}>
       <option selected value="en">English</option>
       <option value="hi">Hindi</option>
       </select>

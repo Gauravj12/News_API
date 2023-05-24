@@ -59,11 +59,15 @@ const updateNews= async ()=>{
     
   };
 
-
-
-const getSearch=(e)=>{
-  setSearch(e.target.value)
+const searchVal=(e)=>{
+  setSearch(e.target.value);
 }
+
+const handleChange = (e) => {
+  setLanguage(e.target.value);
+};
+
+console.log('language',language)
 
 
  /* handelPrevClick= async ()=>{
@@ -85,7 +89,7 @@ const getSearch=(e)=>{
   
     return (
       <>
-      <Navbar onChange={getSearch} language={language}/>
+      <Navbar onChange={searchVal} onLanguageChange={handleChange} language={language}/>
       <div className='container' style={{marginTop:'70px'}}>
          <h2>Top Headlines</h2>
         <div className="card-header">{(props.category).toUpperCase()}</div>
