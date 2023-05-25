@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import NewsItems from './NewsItems'
+import NewsItems from './NewsItems';
 import Navbar from './Navbar';
 import Spinner from './Spinner';
-import nullImg from './images/null.png'
-import PropTypes from 'prop-types'
+import nullImg from './images/null.png';
+import PropTypes from 'prop-types';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 
@@ -12,17 +12,27 @@ const News =(props)=> {
   
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [page, setPage] = useState(1);
+  //const [page, setPage] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
-  const [search, setSearch]=useState('')
-  const [language, setLanguage]=useState('en')
-  const [newsArr, updatedNewsArr]=useState([])
-
-  const apiLink=`https://newsdata.io/api/1/news?apikey=${props.apiKey}&country=${props.country}&category=${props.category}&language=${language}`
+  const [search, setSearch]=useState('');
+  const [language, setLanguage]=useState('en');
+  
 
 
+
+  const getNews= async ()=>{
+    const apiLink=`https://newsdata.io/api/1/news?apikey=${props.apiKey}&country=${props.country}&category=${props.category}&language=${language}`
+    let data=await fetch(apiLink);
+    let parsedData=await data.json()
+    setArticles(parsedData.results)
+    setTotalResults(parsedData.totalResults)
+    setLoading(false);
+  }
+
+ 
 
 const updateNews= async ()=>{
+    const apiLink=`https://newsdata.io/api/1/news?apikey=${props.apiKey}&country=${props.country}&category=${props.category}&language=${language}`
     props.setProgress(10);
     setLoading(true);
     let data=await fetch(apiLink);
@@ -30,32 +40,35 @@ const updateNews= async ()=>{
     let parsedData=await data.json()
     props.setProgress(70);
     setArticles(parsedData.results)
-   // setArticles(parsedData.articles)
     setTotalResults(parsedData.totalResults)
     setLoading(false)
     props.setProgress(100);
-    updatedNewsArr(parsedData)
-    
+    console.log('updateNews','articles',articles)
   }
 
 
 
   useEffect(()=>{
+    getNews()
+    if(articles.length > 0)
+{
     document.title='News_'+props.category.toUpperCase()
     updateNews();
+}
+    // eslint-disable-next-line
   },[])
 
- /* Issue: Whenever we are fetching the new News by running the fetch more Date function, then the "setPage" is taking some time to set the page value, which means taking extra time in rendering the page while scrolling. This issue occurs as the "setPage" is an asynchronous function.*/
-
- /*Solution: To solve this issue we would add "page+", that is set page by incrementing the value, in the url. This is so because the url is being fetched before the set page.*/
 
   const fetchMoreData =async () => {
-    const api=`https://newsdata.io/api/1/news?apikey=${props.apiKey}&country=${props.country}&category=${props.category}&language=${language}&page=${newsArr.nextPage}`
-    let data=await fetch(api);
+    const apiLink=`https://newsdata.io/api/1/news?apikey=${props.apiKey}&country=${props.country}&category=${props.category}&language=${language}`
+    let data=await fetch(apiLink);
     let parsedData=await data.json()
-    setArticles(articles.concat(parsedData.results))
-    setTotalResults(parsedData.totalResults)
-    
+    const api=`https://newsdata.io/api/1/news?apikey=${props.apiKey}&country=${props.country}&category=${props.category}&language=${language}&page=${parsedData.nextPage}`
+    let UpdData=await fetch(api);
+    let parsedUpdData=await UpdData.json()
+    setArticles(articles.concat(parsedUpdData.results))
+    setTotalResults(parsedUpdData.totalResults)
+    console.log('fetchMoreData','articles',articles)
     
   };
 
@@ -85,10 +98,7 @@ const handleChange = async(e) => {
     
     
 }*/
-
-
-
-  
+ 
     return (
       <>
       <Navbar onChange={searchVal} onLanguageChange={handleChange} language={language}/>
@@ -114,7 +124,8 @@ const handleChange = async(e) => {
         })
         .map((element,index)=>{
           return (<div className='col-md-3 mx-auto' key={element.link} /*key={element.url}*/>
-            <NewsItems title={element.title.length >= 45 ? element.title.slice(0, 45) : element.title} publishedAt={element.pubDate} /*publishedAt={element.publishedAt} author={element.author}source={element.source_id}source={element.source.name}*/
+            <NewsItems title={element.title.length >= 45 ? element.title.slice(0, 45) : element.title} publishedAt={element.pubDate} 
+            /*publishedAt={element.publishedAt}*/ author={element.author}source={element.source_id}/*source={element.source.name}*/
             description={element.description !== null && element.title.length >= 45 ? element.description.slice(0, 60) : element.description} /*imgUrl={element.urlToImage === null ? NoImage:element.urlToImage} newsUrl={element.url}*/imgUrl={element.image_url === null ? nullImg:element.image_url} newsUrl={element.link}/>
             </div>)
           })
