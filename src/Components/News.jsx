@@ -18,17 +18,6 @@ const News =(props)=> {
   const [language, setLanguage]=useState('en');
   
 
-
-
-  const getNews= async ()=>{
-    const apiLink=`https://newsdata.io/api/1/news?apikey=${props.apiKey}&country=${props.country}&category=${props.category}&language=${language}`
-    let data=await fetch(apiLink);
-    let parsedData=await data.json()
-    setArticles(parsedData.results)
-    setTotalResults(parsedData.totalResults)
-    setLoading(false);
-  }
-
  
 
 const updateNews= async ()=>{
@@ -49,12 +38,7 @@ const updateNews= async ()=>{
 
 
   useEffect(()=>{
-    getNews()
-    if(articles.length > 0)
-{
-    document.title='News_'+props.category.toUpperCase()
-    updateNews();
-}
+    updateNews()
     // eslint-disable-next-line
   },[])
 
@@ -123,7 +107,7 @@ const handleChange = async(e) => {
           return search.toLowerCase() === '' ? element : element.title.toLowerCase().includes(search);
         })
         .map((element,index)=>{
-          return (<div className='col-md-3 mx-auto' key={element.link} /*key={element.url}*/>
+          return (<div className='col-md-3 mx-auto' key={index} /*key={element.url}*/>
             <NewsItems title={element.title.length >= 45 ? element.title.slice(0, 45) : element.title} publishedAt={element.pubDate} 
             /*publishedAt={element.publishedAt}*/ author={element.author}source={element.source_id}/*source={element.source.name}*/
             description={element.description !== null && element.title.length >= 45 ? element.description.slice(0, 60) : element.description} /*imgUrl={element.urlToImage === null ? NoImage:element.urlToImage} newsUrl={element.url}*/imgUrl={element.image_url === null ? nullImg:element.image_url} newsUrl={element.link}/>
