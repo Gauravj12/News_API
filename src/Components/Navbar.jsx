@@ -26,6 +26,7 @@ const Navbar=(props)=> {
           <li className="nav-item"><Link className='nav-link' to="/technology">Technology</Link></li>
           <li className="nav-item"><Link className='nav-link' to="/world">World</Link></li>
       </ul>
+      <p>array length = {props.length}</p><p>language = {props.language}</p>
       <select className="form-select mx-5" value={props.language} onChange={props.onLanguageChange} aria-label="Default select example" style={{width:'100px'}}>
       <option value="en">English</option>
       <option value="hi">Hindi</option>

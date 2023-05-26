@@ -16,9 +16,16 @@ const News =(props)=> {
   const [totalResults, setTotalResults] = useState(0);
   const [search, setSearch]=useState('');
   const [language, setLanguage]=useState('en');
-  
+  const [newsArr, setnewsArr] = useState([]);
 
- 
+  const fillData=async()=>{
+    const apiLink=`https://newsdata.io/api/1/news?apikey=${props.apiKey}&country=${props.country}&category=${props.category}&language=${language}`
+    let data=await fetch(apiLink);
+    let parsedData=await data.json()
+    setArticles(parsedData.results)
+    newsArr.push([articles])
+    setnewsArr(newsArr);
+  }
 
 const updateNews= async ()=>{
     const apiLink=`https://newsdata.io/api/1/news?apikey=${props.apiKey}&country=${props.country}&category=${props.category}&language=${language}`
@@ -33,11 +40,14 @@ const updateNews= async ()=>{
     setLoading(false)
     props.setProgress(100);
     console.log('updateNews','articles',articles)
+    console.log('updateNews','newsArr',newsArr)
+    
   }
 
-
+// eslint-disable-next-line
 
   useEffect(()=>{
+    fillData()
     updateNews()
     // eslint-disable-next-line
   },[])
@@ -53,7 +63,7 @@ const updateNews= async ()=>{
     setArticles(articles.concat(parsedUpdData.results))
     setTotalResults(parsedUpdData.totalResults)
     console.log('fetchMoreData','articles',articles)
-    
+    console.log('fetchMoreData','newsArr',newsArr)
   };
 
 const searchVal=(e)=>{
@@ -82,10 +92,10 @@ const handleChange = async(e) => {
     
     
 }*/
- 
+
     return (
       <>
-      <Navbar onChange={searchVal} onLanguageChange={handleChange} language={language}/>
+      <Navbar onChange={searchVal} onLanguageChange={handleChange} language={language} length={articles.length}/>
       <div className='container' style={{marginTop:'70px'}}>
          <h2>Top Headlines</h2>
         <div className="card-header">{(props.category).toUpperCase()}</div>
@@ -102,18 +112,21 @@ const handleChange = async(e) => {
         >
           <div className='container'>
         <div className='row '>
-        { articles
+        
+        { 
+        articles
         .filter((element)=>{
           return search.toLowerCase() === '' ? element : element.title.toLowerCase().includes(search);
         })
         .map((element,index)=>{
-          return (<div className='col-md-3 mx-auto' key={index} /*key={element.url}*/>
+          return (<div className='col-md-3 mx-auto' key={index} /*key={element.url}*/ length={articles.length}>
             <NewsItems title={element.title.length >= 45 ? element.title.slice(0, 45) : element.title} publishedAt={element.pubDate} 
             /*publishedAt={element.publishedAt}*/ author={element.author}source={element.source_id}/*source={element.source.name}*/
             description={element.description !== null && element.title.length >= 45 ? element.description.slice(0, 60) : element.description} /*imgUrl={element.urlToImage === null ? NoImage:element.urlToImage} newsUrl={element.url}*/imgUrl={element.image_url === null ? nullImg:element.image_url} newsUrl={element.link}/>
             </div>)
           })
         } 
+        
         </div>
         </div>
         </InfiniteScroll>
