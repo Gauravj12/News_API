@@ -16,16 +16,8 @@ const News =(props)=> {
   const [totalResults, setTotalResults] = useState(0);
   const [search, setSearch]=useState('');
   const [language, setLanguage]=useState('en');
-  const [newsArr, setnewsArr] = useState([]);
+  const [newsArr, setNewsArr]=useState([])
 
-  const fillData=async()=>{
-    const apiLink=`https://newsdata.io/api/1/news?apikey=${props.apiKey}&country=${props.country}&category=${props.category}&language=${language}`
-    let data=await fetch(apiLink);
-    let parsedData=await data.json()
-    setArticles(parsedData.results)
-    newsArr.push([articles])
-    setnewsArr(newsArr);
-  }
 
 const updateNews= async ()=>{
     const apiLink=`https://newsdata.io/api/1/news?apikey=${props.apiKey}&country=${props.country}&category=${props.category}&language=${language}`
@@ -39,15 +31,13 @@ const updateNews= async ()=>{
     setTotalResults(parsedData.totalResults)
     setLoading(false)
     props.setProgress(100);
-    console.log('updateNews','articles',articles)
-    console.log('updateNews','newsArr',newsArr)
+    console.log('updateNews','articles',Object.entries(articles))
     
   }
 
 // eslint-disable-next-line
 
   useEffect(()=>{
-    fillData()
     updateNews()
     // eslint-disable-next-line
   },[])
@@ -62,6 +52,7 @@ const updateNews= async ()=>{
     let parsedUpdData=await UpdData.json()
     setArticles(articles.concat(parsedUpdData.results))
     setTotalResults(parsedUpdData.totalResults)
+
     console.log('fetchMoreData','articles',articles)
     console.log('fetchMoreData','newsArr',newsArr)
   };
@@ -114,7 +105,7 @@ const handleChange = async(e) => {
         <div className='row '>
         
         { 
-        articles
+        articles.length >= 10 && articles
         .filter((element)=>{
           return search.toLowerCase() === '' ? element : element.title.toLowerCase().includes(search);
         })
