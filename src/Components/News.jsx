@@ -6,24 +6,32 @@ import nullImg from './images/null.png';
 import PropTypes from 'prop-types';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-
+/*fetch(`https://newsdata.io/api/1/news?apikey=pub_2363751d261c8b6fde91b93784d9d5a7c08ad&country=in&category=top&language=en`)
+      .then((response) => response.json())
+      .then((apiData) => {
+         console.log(apiData);*/
 
 const News =(props)=> {
   
+  const [newsArr, setNewsArr] = useState([]);
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   //const [page, setPage] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
   const [search, setSearch]=useState('');
   const [language, setLanguage]=useState('en');
-  const [newsArr, setNewsArr]=useState([])
 
+
+  const handleChange = async(e) => {
+    setLanguage(e.target.value);
+    updateNews();
+  };
 
 const updateNews= async ()=>{
-    const apiLink=`https://newsdata.io/api/1/news?apikey=${props.apiKey}&country=${props.country}&category=${props.category}&language=${language}`
+    let url=`https://newsdata.io/api/1/news?apikey=${props.apiKey}&country=${props.country}&category=${props.category}&language=${language}`
     props.setProgress(10);
     setLoading(true);
-    let data=await fetch(apiLink);
+    let data=await fetch(url);
     props.setProgress(30);
     let parsedData=await data.json()
     props.setProgress(70);
@@ -31,18 +39,17 @@ const updateNews= async ()=>{
     setTotalResults(parsedData.totalResults)
     setLoading(false)
     props.setProgress(100);
-    console.log('updateNews','articles',Object.entries(articles))
+    console.log('updateNews','articles',articles)
     
   }
 
-// eslint-disable-next-line
 
-  useEffect(()=>{
+ useEffect((e)=>{
     updateNews()
     // eslint-disable-next-line
   },[])
 
-
+  
   const fetchMoreData =async () => {
     const apiLink=`https://newsdata.io/api/1/news?apikey=${props.apiKey}&country=${props.country}&category=${props.category}&language=${language}`
     let data=await fetch(apiLink);
@@ -54,19 +61,13 @@ const updateNews= async ()=>{
     setTotalResults(parsedUpdData.totalResults)
 
     console.log('fetchMoreData','articles',articles)
-    console.log('fetchMoreData','newsArr',newsArr)
+    //console.log('updateNews','newsList',newsList)
   };
 
 const searchVal=(e)=>{
   setSearch(e.target.value);
   
 }
-
-const handleChange = async(e) => {
-  setLanguage(e.target.value);
-  updateNews()
-};
-
 
 
 
@@ -110,10 +111,10 @@ const handleChange = async(e) => {
           return search.toLowerCase() === '' ? element : element.title.toLowerCase().includes(search);
         })
         .map((element,index)=>{
-          return (<div className='col-md-3 mx-auto' key={index} /*key={element.url}*/ length={articles.length}>
+          return (<div className='col-md-3 mx-auto' key={index} length={articles.length}>
             <NewsItems title={element.title.length >= 45 ? element.title.slice(0, 45) : element.title} publishedAt={element.pubDate} 
-            /*publishedAt={element.publishedAt}*/ author={element.author}source={element.source_id}/*source={element.source.name}*/
-            description={element.description !== null && element.title.length >= 45 ? element.description.slice(0, 60) : element.description} /*imgUrl={element.urlToImage === null ? NoImage:element.urlToImage} newsUrl={element.url}*/imgUrl={element.image_url === null ? nullImg:element.image_url} newsUrl={element.link}/>
+            author={element.author}source={element.source_id}
+            description={element.description !== null && element.title.length >= 45 ? element.description.slice(0, 60) : element.description} imgUrl={element.image_url === null ? nullImg:element.image_url} newsUrl={element.link}/>
             </div>)
           })
         } 

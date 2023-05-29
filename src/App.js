@@ -6,6 +6,7 @@ import LoadingBar from 'react-top-loading-bar';
 
 
 const App =()=> {
+  
  let pageSize=10;
  const apiKey=process.env.REACT_APP_API_KEY
 

@@ -11,7 +11,7 @@ const NewsItems=(props)=> {
       <div className="card">
     <img src={imgUrl} className="card-img-top" alt="..."/>
     <div className="card-body">
-    <span className="badge text-bg-info">{source}</span>
+    <span className="badge text-bg-info">{source}</span>      
     <h5 className="card-title">{title}...</h5>
     <p className="card-text">{description}...</p>
     <p className="card-text"><small className="text-body-secondary">Last updated on {new Date(publishedAt).toDateString()}, {new Date(publishedAt).toLocaleTimeString()} by {author===null ? 'Unknown' : author }</small></p>
