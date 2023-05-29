@@ -22,9 +22,21 @@ const News =(props)=> {
   const [language, setLanguage]=useState('en');
 
 
+  useEffect(()=>{
+    if(language==='en')
+    {
+      updateNews();
+    }
+    else if (language==='hi')
+    {
+      updateNews();
+    }
+      // eslint-disable-next-line
+    },[language])
+
   const handleChange = async(e) => {
     setLanguage(e.target.value);
-    updateNews();
+    
   };
 
 const updateNews= async ()=>{
@@ -44,10 +56,7 @@ const updateNews= async ()=>{
   }
 
 
- useEffect((e)=>{
-    updateNews()
-    // eslint-disable-next-line
-  },[])
+ 
 
   
   const fetchMoreData =async () => {
