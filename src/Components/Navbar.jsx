@@ -3,17 +3,17 @@ import { Link } from 'react-router-dom'
 // import PropTypes from 'prop-types'
 
 const Navbar=(props)=> {
-
+  
 
     return (
       <div>
-  <nav className="navbar fixed-top navbar-expand-lg bg-body-tertiary">
+  <nav className="navbar fixed-top navbar-expand-lg bg-body-tertiary dropdown">
   <div className="container-fluid">
     <Link className="navbar-brand" to="/">NewsGlobal</Link>
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span className="navbar-toggler-icon"></span>
     </button>
-    <div className="collapse navbar-collapse" id="navbarSupportedContent">
+    <div className='collapse navbar-collapse' id='navbarSupportedContent'>
       <ul className="navbar-nav me-auto mb-2 mb-lg-0">
        
         <li className="nav-item"><Link className='nav-link' to="/top">Top</Link></li>
@@ -26,13 +26,13 @@ const Navbar=(props)=> {
           <li className="nav-item"><Link className='nav-link' to="/technology">Technology</Link></li>
           <li className="nav-item"><Link className='nav-link' to="/world">World</Link></li>
       </ul>
-      <p>array length = {props.length}</p><p>language = {props.language}</p>
-      <select className="form-select mx-5" value={props.language} onChange={props.onLanguageChange} aria-label="Default select example" style={{width:'100px'}}>
-      <option value="en">English</option>
-      <option value="hi">Hindi</option>
+      <select style={{width:'10vw'}} className="form-select mx-1" value={props.language} onChange={props.onLanguageChange} aria-label="Default select example">
+      <option value="en" style={{fontSize:'1vw'}}>English</option>
+      <option value="hi" style={{fontSize:'1vw'}}>Hindi</option>
       </select>
       <form className="d-flex" role="search">
         <input className="form-control me-2" onChange={props.onChange} type="search" placeholder="Search" aria-label="Search"/>
+        <button className="btn btn-outline-success" type="submit" onClick={props.onclick}>Search</button>
       </form>
     </div>
   </div>

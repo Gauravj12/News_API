@@ -9,9 +9,9 @@ const Home=()=> {
     <div className='container-fluid' style={{marginTop:'70px'}}>
     <div className="card text-center">
   <div className="card-body">
-    <h5 className="card-title">News API</h5>
-    <p className="card-text">News API is a simple, easy-to-use REST API that returns JSON search results for current and historic news articles published by over 80,000 worldwide sources.</p>
-    <a href="https://newsapi.org/" rel="noreferrer" target='_blank' className="btn btn-primary">newsapi.org</a>
+    <h5 className="card-title">NEWSDATA .IO</h5>
+    <p className="card-text">Best News API To Search, Collect, And Track Worldwide News</p>
+    <a href="https://newsdata.io/" rel="noreferrer" target='_blank' className="btn btn-primary">Go to newsdata.io...</a>
   </div>
 </div>
 </div>
