@@ -3,7 +3,7 @@ import React from 'react'
 const NewsItems=(props)=> {
   
 
-    let {title, publishedAt, creator, description, imgUrl, newsUrl, source }=props;
+    let {title, publishedAt, creator, description, imgUrl, newsUrl, source, keyword }=props;
     
 
     return (
@@ -16,6 +16,7 @@ const NewsItems=(props)=> {
     <p className="card-text">{description}...</p>
     <p className="card-text"><small className="text-body-secondary">Last updated on {new Date(publishedAt).toDateString()}, {new Date(publishedAt).toLocaleTimeString()} by {creator} </small></p>
     <a href={newsUrl} target='_blank' rel="noopener noreferrer" className="btn btn-primary btn-sm">Read more..</a>
+    <span class="badge text-bg-light float-end text-wrap">{keyword}</span>
   </div>
 </div>
       </div>
@@ -24,3 +25,5 @@ const NewsItems=(props)=> {
 }
 
 export default NewsItems;
+
+

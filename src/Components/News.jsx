@@ -20,6 +20,7 @@ const News =(props)=> {
 
   useEffect(()=>{
     language==='hi' ? updateNews() : updateNews()
+    document.title=`News_${props.category.toUpperCase()}`
     //eslint-disable-next-line
     },[language])
 
@@ -70,9 +71,9 @@ const searchNews=(e)=>{
     return (
       <>
       <Navbar onChange={searchVal} onclick={searchNews} onLanguageChange={handleChange} page={page} length={articles.length}/>
-      <div className='container' style={{marginTop:'70px'}}>
-         <h2>Top Headlines</h2>
-        <div className="card-header">{(props.category).toUpperCase()}</div>
+      <div className='container' style={{marginTop:'7.5em'}}>
+         <h3>Latest News - {(props.category).toUpperCase()} Category</h3>
+        
       
       <div className='my-3'>
          {loading && <Spinner/>} 
@@ -98,7 +99,7 @@ const searchNews=(e)=>{
             publishedAt={element.pubDate} source={element.source_id} 
             creator={element.creator===null ? 'NA' :element.creator}
             description={element.description=== null ? 'Description not available...' : element.description.slice(0,100)} 
-            imgUrl={element.image_url === null ? nullImg:element.image_url} newsUrl={element.link}/>
+            imgUrl={element.image_url === null ? nullImg:element.image_url} newsUrl={element.link} keyword={element.keywords}/>
             </div>)
           })
         }  

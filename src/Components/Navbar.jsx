@@ -9,10 +9,11 @@ const Navbar=(props)=> {
       <div>
   <nav className="navbar fixed-top navbar-expand-lg bg-body-tertiary dropdown">
   <div className="container-fluid">
-    <Link className="navbar-brand" to="/">NewsGlobal</Link>
+    <Link className="navbar-brand" to="/"><h2>NewsGlobal</h2></Link>
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span className="navbar-toggler-icon"></span>
     </button>
+
     <div className='collapse navbar-collapse' id='navbarSupportedContent'>
       <ul className="navbar-nav me-auto mb-2 mb-lg-0">
        
@@ -25,18 +26,26 @@ const Navbar=(props)=> {
           <li className="nav-item"><Link className='nav-link' to="/sports">Sports</Link></li>
           <li className="nav-item"><Link className='nav-link' to="/technology">Technology</Link></li>
           <li className="nav-item"><Link className='nav-link' to="/world">World</Link></li>
+
       </ul>
-      <select style={{width:'10vw'}} className="form-select mx-1" value={props.language} onChange={props.onLanguageChange} aria-label="Default select example">
-      <option value="en" style={{fontSize:'1vw'}}>English</option>
-      <option value="hi" style={{fontSize:'1vw'}}>Hindi</option>
-      </select>
-      <form className="d-flex" role="search">
-        <input className="form-control me-2" onChange={props.onChange} type="search" placeholder="Search" aria-label="Search"/>
-        <button className="btn btn-outline-success" type="submit" onClick={props.onclick}>Search</button>
-      </form>
+     
     </div>
+    <div className='d-inline'>
+    <form className="d-flex d-inline my-2" role="search">
+<select style={{width:'6.5em'}} className="form-select mx-1" value={props.language} onChange={props.onLanguageChange} aria-label="Default select example">
+      <option value="en" >English</option>
+      <option value="hi" >Hindi</option>
+      </select>
+      
+        <input className="form-control me-2" onChange={props.onChange} type="search" placeholder="Search" aria-label="Search"/>
+        <button className="btn btn-outline-success btn-sm" type="submit" onClick={props.onclick}>Search</button>
+      </form>
+      </div>
   </div>
 </nav>
+
+
+
       </div>
     )
   
