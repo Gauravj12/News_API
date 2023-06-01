@@ -99,7 +99,7 @@ const searchNews=(e)=>{
             publishedAt={element.pubDate} source={element.source_id} 
             creator={element.creator===null ? 'NA' :element.creator}
             description={element.description=== null ? 'Description not available...' : element.description.slice(0,100)} 
-            imgUrl={element.image_url === null ? nullImg:element.image_url} newsUrl={element.link} keyword={element.keywords}/>
+            imgUrl={element.image_url === null ? nullImg:element.image_url} newsUrl={element.link}/>
             </div>)
           })
         }  
