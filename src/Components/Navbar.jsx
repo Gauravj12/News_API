@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom'
 // import PropTypes from 'prop-types'
 
 const Navbar=(props)=> {
-  
-
+ 
     return (
       <div>
-  <nav className="navbar fixed-top navbar-expand-lg bg-body-tertiary dropdown">
+       
+   <nav className={`navbar fixed-top navbar-expand-lg dropdown navbar-${props.mode} bg-${props.mode}`}> 
   <div className="container-fluid">
     <Link className="navbar-brand" to="/"><h2>NewsGlobal</h2></Link>
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -17,7 +17,6 @@ const Navbar=(props)=> {
     <div className='collapse navbar-collapse' id='navbarSupportedContent'>
       <ul className="navbar-nav me-auto mb-2 mb-lg-0">
        
-        <li className="nav-item"><Link className='nav-link' to="/top">Top</Link></li>
           <li className="nav-item"><Link className='nav-link' to="/business">Business</Link></li>
           <li className="nav-item"><Link className='nav-link' to="/entertainment">Entertainment</Link></li>
           <li className="nav-item"><Link className='nav-link' to="/health">Health</Link></li>
@@ -30,15 +29,18 @@ const Navbar=(props)=> {
       </ul>
      
     </div>
-    <div className='d-inline'>
-    <form className="d-flex d-inline my-2" role="search">
+    <div className='d-inline d-flex'>
+    <div className="d-inline form-check form-switch my-3">
+  <input className="form-check-input" onClick={props.modeChange} type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
+  <label className="form-check-label" htmlFor="flexSwitchCheckDefault">{props.mode === 'dark'?'Dark':'Light'}</label>
+</div>
+<form className="d-flex d-inline my-2" role="search">
 <select style={{width:'6.5em'}} className="form-select mx-1" value={props.language} onChange={props.onLanguageChange} aria-label="Default select example">
       <option value="en" >English</option>
       <option value="hi" >Hindi</option>
       </select>
-      
-        <input className="form-control me-2" onChange={props.onChange} type="search" placeholder="Search" aria-label="Search"/>
-        <button className="btn btn-outline-success btn-sm" type="submit" onClick={props.onclick}>Search</button>
+      <input className="form-control me-2" onChange={props.onChange} type="search" placeholder="Search" aria-label="Search"/>
+      <button className="btn btn-outline-success btn-sm" type="submit" onClick={props.onclick}>Search</button>
       </form>
       </div>
   </div>
@@ -48,7 +50,7 @@ const Navbar=(props)=> {
 
       </div>
     )
-  
+ 
 }
 
 export default Navbar;
