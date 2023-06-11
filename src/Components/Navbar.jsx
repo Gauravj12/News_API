@@ -2,12 +2,12 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 // import PropTypes from 'prop-types'
 
-const Navbar=(props)=> {
- 
+const Navbar=(props,c)=> {
+  document.body.style.backgroundColor === 'gray' ? c='dark':c='light'
     return (
       <div>
        
-   <nav className={`navbar fixed-top navbar-expand-lg dropdown navbar-${props.mode} bg-${props.mode}`}> 
+   <nav className={`navbar fixed-top navbar-expand-lg dropdown navbar-${c} bg-${c}`}> 
   <div className="container-fluid">
     <Link className="navbar-brand" to="/"><h2>NewsGlobal</h2></Link>
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,8 +31,8 @@ const Navbar=(props)=> {
     </div>
     <div className='d-inline d-flex'>
     <div className="d-inline form-check form-switch my-3">
-  <input className="form-check-input" onClick={props.modeChange} type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
-  <label className="form-check-label" htmlFor="flexSwitchCheckDefault">{props.mode === 'dark'?'Dark':'Light'}</label>
+  <input className="form-check-input" onClick={props.modeChange} type="checkbox" role="switch" id="flexSwitchCheckDefault" checked={c === 'dark'?true:false}/>
+  <label className="form-check-label" htmlFor="flexSwitchCheckDefault">{c === 'dark'?'Dark':'Light'}</label>
 </div>
 <form className="d-flex d-inline my-2" role="search">
 <select style={{width:'6.5em'}} className="form-select mx-1" value={props.language} onChange={props.onLanguageChange} aria-label="Default select example">

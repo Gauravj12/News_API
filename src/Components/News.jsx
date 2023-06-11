@@ -16,11 +16,11 @@ const News =(props)=> {
   const [totalResults, setTotalResults] = useState(0);
   const [search, setSearch]=useState('');
   const [language, setLanguage]=useState('en');
-  const [dark, setDark]=useState('light')
- 
+  const [mode, setMode]=useState('light');
+  
+
 
   useEffect(()=>{
-    
     language==='hi' ? updateNews() : updateNews()
     document.title=`News_${props.category.toUpperCase()}`
     
@@ -29,20 +29,24 @@ const News =(props)=> {
 
 
     const setDarkMode=()=>{
-     if (dark==='light')
+
+      if (mode ==='light')
      {
-      setDark('dark')
+      setMode('dark')
+      
       document.body.style.backgroundColor = 'gray';
       document.body.style.color='white'
-    }
-      else if(dark==='dark')
+      }
+      else if(mode==='dark' && document.body.style.backgroundColor === 'gray' && document.body.style.color==='white')
      {
-      setDark('light')
+      setMode('light')
+      
       document.body.style.backgroundColor = 'white';
       document.body.style.color='black'
-     }
+     } 
      
     }
+    
 
   const handleChange = async(e) => {
     setLanguage(e.target.value);
@@ -50,6 +54,7 @@ const News =(props)=> {
   };
 
 const updateNews= async ()=>{
+  
     let url=`https://newsdata.io/api/1/news?apikey=${props.apiKey}&country=${props.country}&category=${props.category}&language=${language}&q=${search}`
     props.setProgress(10);
     setLoading(true);
@@ -89,7 +94,7 @@ const searchNews=(e)=>{
 
     return (
       <>
-      <Navbar mode={dark} modeChange={setDarkMode} onChange={searchVal} setMode={setDarkMode} onclick={searchNews} onLanguageChange={handleChange} page={page} length={articles.length}/>
+      <Navbar mode={mode} modeChange={setDarkMode} onChange={searchVal} setMode={setDarkMode} onclick={searchNews} onLanguageChange={handleChange} page={page} length={articles.length}/>
       <div className='container' style={{marginTop:'7.5em'}}>
          <h3>Latest News - {(props.category).toUpperCase()} Category</h3>
       <div className='my-3'>
@@ -113,7 +118,7 @@ const searchNews=(e)=>{
         })*/
         .map((element,index)=>{
           return (<div className='col-md-3 mx-auto' key={index} length={articles.length}>
-            <NewsItems mode={dark} title={element.title.length >= 45 ? element.title.slice(0, 45) : element.title} 
+            <NewsItems mode={mode} title={element.title.length >= 45 ? element.title.slice(0, 45) : element.title} 
             publishedAt={element.pubDate} source={element.source_id} 
             creator={element.creator===null ? 'NA' :element.creator}
             description={element.description=== null ? 'Description not available...' : element.description.slice(0,100)} 

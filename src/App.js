@@ -5,11 +5,14 @@ import LoadingBar from 'react-top-loading-bar';
 
 
 const App =()=> {
+  const [progress, setProgress] = useState(0);
+ 
+
+
  let pageSize=10;
  const apiKey=process.env.REACT_APP_API_KEY
 
-  const [progress, setProgress] = useState(0);
-   
+ 
   
     return (
       <div>
