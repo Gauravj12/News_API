@@ -9,7 +9,7 @@ const Navbar=(props,c)=> {
        
    <nav className={`navbar fixed-top navbar-expand-lg dropdown navbar-${c} bg-${c}`}> 
   <div className="container-fluid">
-    <Link className="navbar-brand" to="/"><h2>NewsGlobal</h2></Link>
+    <Link className="navbar-brand" to="/news_api"><h2>NewsGlobal</h2></Link>
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span className="navbar-toggler-icon"></span>
     </button>
@@ -17,6 +17,7 @@ const Navbar=(props,c)=> {
     <div className='collapse navbar-collapse' id='navbarSupportedContent'>
       <ul className="navbar-nav me-auto mb-2 mb-lg-0">
        
+          <li className="nav-item"><Link className='nav-link' to="/top">Top</Link></li>
           <li className="nav-item"><Link className='nav-link' to="/business">Business</Link></li>
           <li className="nav-item"><Link className='nav-link' to="/entertainment">Entertainment</Link></li>
           <li className="nav-item"><Link className='nav-link' to="/health">Health</Link></li>

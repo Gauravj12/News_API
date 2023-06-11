@@ -1,8 +1,8 @@
 {
-  "homepage": "https://gauravJ12.github.io/News_API",
+  "homepage": "https://Gauravj12.github.io/news_api",
   "name": "news_api",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
